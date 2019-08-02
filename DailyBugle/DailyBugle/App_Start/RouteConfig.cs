@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using DailyBugle.Controllers;
 
 namespace DailyBugle
 {
@@ -17,6 +18,14 @@ namespace DailyBugle
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                
+            );
+
+            routes.MapRoute(
+                name: "Admin",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Home",action = "Index", id= UrlParameter.Optional},
+                constraints: "DailyBugle.Areas.Admin"
             );
         }
     }

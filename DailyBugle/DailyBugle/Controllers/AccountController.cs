@@ -79,6 +79,9 @@ namespace DailyBugle.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    bool isAdmin = User.IsInRole("SuperAdmin");
+                    if(isAdmin)
+                        return RedirectToLocal(returnUrl);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
