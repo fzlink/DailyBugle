@@ -41,6 +41,12 @@ namespace DailyBugle
                 }
             }
 
+            if (!roleManager.RoleExists("Editor"))
+            {
+                var role = new IdentityRole("Editor");
+                roleManager.Create(role);
+            }
+
         }
     }
 }

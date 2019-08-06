@@ -22,11 +22,16 @@ namespace DailyBugle
             );
 
             routes.MapRoute(
-                name: "Admin",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home",action = "Index", id= UrlParameter.Optional},
-                constraints: "DailyBugle.Areas.Admin"
-            );
+                name: "AdminHomePage",
+                url: "Admin/AdminPage/{action}/{id}",
+                defaults: new {controller = "AdminPage", action= "Index", id= UrlParameter.Optional }
+                );
+
+            routes.MapRoute(
+                name: "EditorHomePage",
+                url: "Editor/EditorPage/{action}/{id}",
+                defaults: new {controller = "EditorPage", action = "Index", id =UrlParameter.Optional}
+                );
         }
     }
 }

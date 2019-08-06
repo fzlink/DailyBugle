@@ -10,6 +10,14 @@ namespace DailyBugle.Controllers
     {
         public ActionResult Index()
         {
+            if (User.IsInRole("SuperAdmin"))
+            {
+                return RedirectToRoute("AdminHomePage");
+            }
+            else if (User.IsInRole("Editor"))
+            {
+                return RedirectToRoute("EditorHomePage");
+            }
             return View();
         }
 

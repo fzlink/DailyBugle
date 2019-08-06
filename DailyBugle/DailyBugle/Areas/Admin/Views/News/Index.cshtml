@@ -1,0 +1,42 @@
+﻿@model IEnumerable<DailyBugle.Models.NewsViewModel>
+@{
+    ViewBag.Title = "News";
+}
+
+<h2>News</h2>
+
+@Html.Partial("_CreateNewPartial")
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Text)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AuthorName)
+        </th>
+        <th></th>
+    </tr>
+@foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Text)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AuthorName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { controller = "News", id = item.NewsId }) |
+                @Html.ActionLink("Details", "Details", new { controller = "News", id = item.NewsId }) |
+                @Html.ActionLink("Delete", "Delete", new { controller = "News", id = item.NewsId })
+            </td>
+        </tr>
+    }
+
+</table>
