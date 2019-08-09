@@ -11,13 +11,23 @@ namespace DailyBugle.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class News
     {
+        
         public int NewsId { get; set; }
+
+        
         public string Title { get; set; }
+
+        
         public string Text { get; set; }
+
+        
         public byte[] Thumbnail { get; set; }
+
+        
         public string AuthorName { get; set; }
     }
 }

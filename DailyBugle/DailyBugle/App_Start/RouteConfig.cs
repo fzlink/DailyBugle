@@ -32,6 +32,25 @@ namespace DailyBugle
                 url: "Editor/EditorPage/{action}/{id}",
                 defaults: new {controller = "EditorPage", action = "Index", id =UrlParameter.Optional}
                 );
+
+            routes.MapRoute(
+                name: "UserHomePage",
+                url: "User/{action}/{id}",
+                defaults: new { controller = "User", action = "Index", id = UrlParameter.Optional}
+                );
+
+            routes.MapRoute(
+                name: "AdminNewsPage",
+                url: "Admin/News/Index/{id}",
+                defaults: new {area = "Admin", controller = "News", action = "Index", id = UrlParameter.Optional}
+                );
+
+            routes.MapRoute(
+                name: "EditorNewsPage",
+                url: "Editor/News/Index/{id}",
+                defaults: new {area = "Editor", controller = "News", action = "Index", id = UrlParameter.Optional}
+                
+                );
         }
     }
 }

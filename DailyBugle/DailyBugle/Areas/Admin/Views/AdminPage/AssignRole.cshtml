@@ -1,25 +1,66 @@
-﻿
+﻿@model DailyBugle.Areas.Admin.Models.BoolModel
 @{
     ViewBag.Title = "AssignRole";
 }
 
 <h2>AssignRole</h2>
 
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
 @using (Html.BeginForm("AssignRole", "AdminPage", FormMethod.Post))
 {
     <div class="row">
         <div class="col-md-6">
             <label class="control-label">Email</label>
-            <input type="text" name="txtEmail" class="form-control" />
+            <input type="text" name="txtEmail" class="form-control" required />
+            @if (Model != null && Model.result == false)
+            {
+                @: Please enter a valid email
+            }
         </div>
         <div class="col-md-6">
             <label class="control-label">Select a Role</label>
-            @Html.DropDownList("txtRoleName",(IEnumerable<SelectListItem>)ViewBag.Roles, "Select...")
+            @Html.DropDownList("txtRoleName", (IEnumerable<SelectListItem>)ViewBag.Roles, "Select...")
+            @*<p class="form-control" name="roleError" id="roleError" style="color:red"></p>*@
+            @if(Model !=null && Model.result == true)
+            {
+                @: Please select a role
+            }
+            
         </div>
     </div>
     <div class="row">
         <div class="col-md-12 col-lg-1 lg-12">
-            <button class="btn btn-primary" value="Submit" type="submit">Save</button>
+            <button onclick="emre()" value="Submit" type="submit"class="btn btn-primary">Save</button>
+
         </div>
     </div>
 }
+
+<script>
+    function emre() {
+        console.log(document.getElementsByTagName("select")[0].value);
+        if (document.getElementsByTagName("select")[0].value == "") {
+            //alert("Please select a role");
+            document.getElementById("roleError").innerHTML = "Please select a role";
+            @*document.getElementById("ErrorInput").innerHTML = "a";
+            @Html.ViewBag.errorMessage = true;*@
+        }
+        //else
+        //    document.getElementById("ErrorInput").innerHTML = "";
+            //console.log("true");
+
+    }
+
+    @*function ValidateEmail() {
+        $.ajax({
+            type: 'POST',
+            url: "@Url.Content("/AdminPage/ValidateEmail/")",
+            data: document.getElementsByTagName("input")[0].value,
+            dataType: datatype,
+            success: function (result) {
+
+            }
+        })
+    }*@
+</script>

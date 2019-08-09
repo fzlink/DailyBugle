@@ -18,6 +18,10 @@ namespace DailyBugle.Controllers
             {
                 return RedirectToRoute("EditorHomePage");
             }
+            else if (User.IsInRole("User"))
+            {
+                return RedirectToRoute("UserHomePage");
+            }
             return View();
         }
 

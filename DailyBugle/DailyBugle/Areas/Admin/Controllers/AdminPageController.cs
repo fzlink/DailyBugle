@@ -1,4 +1,5 @@
-﻿using DailyBugle.Models;
+﻿using DailyBugle.Areas.Admin.Models;
+using DailyBugle.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
@@ -35,7 +36,7 @@ namespace DailyBugle.Areas.Admin.Controllers
 
             if (!roleManager.RoleExists(roleName))
             {
-                //create super admin
+                //create role
                 var role = new IdentityRole(roleName);
                 roleManager.Create(role);
 
@@ -59,14 +60,36 @@ namespace DailyBugle.Areas.Admin.Controllers
             string email = form["txtEmail"];
             string roleName = form["txtRoleName"];
             ApplicationUser user = context.Users.Where(x => x.Email.Equals(email, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+            if (user == null)
+            {
+                BoolModel b1 = new BoolModel() { result = false };
+                ViewBag.Roles = context.Roles.Select(r => new SelectListItem { Value = r.Name, Text = r.Name }).ToList();
+                return View(b1);
+            }
 
-            userManager.AddToRole(user.Id, roleName);
+            string ErrorInput = form["ErrorInput"];
+            
+            if ( roleName!="")
+            {
+                userManager.AddToRole(user.Id, roleName);
+                return RedirectToAction("Index");
+            }
+            BoolModel b2 = new BoolModel() { result = true };
+            ViewBag.Roles = context.Roles.Select(r => new SelectListItem { Value = r.Name, Text = r.Name }).ToList();
+            return View(b2);
 
-            return View("Index");
         }
-
-
-
-
+        
+        [HttpPost]
+        public ActionResult ValidateEmail(string data)
+        {
+            bool result;
+            ApplicationUser user = context.Users.Where(x => x.Email.Equals(data, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+            if (user == null)
+                result = false;
+            else
+                result = true;
+            return View(result);
+        }
     }
 }

@@ -45,9 +45,15 @@ namespace DailyBugle.Areas.Admin.Controllers
                 Text = model.Text,
                 Title = model.Title
             };
-            db.News.Add(news);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+
+            if (ModelState.IsValid)
+            {
+                db.News.Add(news);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(model);
         }
 
         public ActionResult Details(int id)

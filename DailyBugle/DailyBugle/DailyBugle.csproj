@@ -173,6 +173,8 @@
     <Compile Include="Areas\Admin\Controllers\AdminPageController.cs" />
     <Compile Include="Areas\Admin\Controllers\NewsController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
+    <Compile Include="Areas\Admin\Models\AssignRoleModel.cs" />
+    <Compile Include="Areas\Admin\Models\BoolModel.cs" />
     <Compile Include="Areas\Editor\Controllers\EditorPageController.cs" />
     <Compile Include="Areas\Editor\Controllers\NewsController.cs" />
     <Compile Include="Areas\Editor\EditorAreaRegistration.cs" />
@@ -184,6 +186,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\EditProfileViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\News.cs">
@@ -218,6 +221,8 @@
     <Content Include="Content\Images\News3.jpg" />
     <Content Include="Content\Logos\dailyBugleLogo.jpg" />
     <Content Include="Content\Logos\dailyBugleLogo2.jpg" />
+    <Content Include="Content\Logos\dailyBugleLogoSmall.jpg" />
+    <Content Include="Content\Logos\dailyBugleLogoSmall2.jpg" />
     <Content Include="Content\Logos\NewspaperLogo.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -313,11 +318,13 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\User\News.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\EditProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Home\" />
+    <Folder Include="Areas\Admin\Views\ManageAdmin\" />
     <Folder Include="Areas\Editor\Models\" />
   </ItemGroup>
   <ItemGroup>
