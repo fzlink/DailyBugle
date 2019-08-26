@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -22,29 +23,40 @@ namespace DailyBugle.Areas.Editor.Controllers
                 Title = x.Title,
                 Text = x.Text,
                 AuthorName = x.AuthorName
-
+                
             }).ToList();
             
             return View(newsListVM);
 
         }
 
+
+
         public ActionResult Create()
         {
+
+            ViewBag.Categories = GetCategoryList();
+
             return View();
         }
 
         [HttpPost]
-        public ActionResult Create(NewsViewModel model)
+        public ActionResult Create(NewsViewModel model, HttpPostedFileBase image)
         {
-
+            ViewBag.Categories = GetCategoryList();
             News news = new News()
             {
                 AuthorName = model.AuthorName,
                 NewsId = model.NewsId,
                 Text = model.Text,
-                Title = model.Title
+                Title = model.Title,
+                Category = model.Category
             };
+
+            MemoryStream memory = new MemoryStream();
+            image.InputStream.CopyTo(memory);
+            news.Thumbnail = memory.ToArray();
+
 
             if (ModelState.IsValid)
             {
@@ -63,18 +75,24 @@ namespace DailyBugle.Areas.Editor.Controllers
 
         public ActionResult Edit(int id)
         {
+            ViewBag.Categories = GetCategoryList();
             NewsViewModel model = CreateModelWithId(id);
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult Edit(NewsViewModel model)
+        public ActionResult Edit(NewsViewModel model, HttpPostedFileBase image)
         {
             News news = db.News.Where(x => x.NewsId == model.NewsId).FirstOrDefault();
-
+            ViewBag.Categories = GetCategoryList();
             news.Text = model.Text;
             news.Title = model.Title;
             news.AuthorName = model.AuthorName;
+            news.Category = model.Category;
+
+            MemoryStream memory = new MemoryStream();
+            image.InputStream.CopyTo(memory);
+            news.Thumbnail = memory.ToArray();
 
             if (ModelState.IsValid)
             {
@@ -83,6 +101,16 @@ namespace DailyBugle.Areas.Editor.Controllers
                 return RedirectToAction("Index");
             }
             return View(model);
+        }
+
+        private List<string> GetCategoryList()
+        {
+            List<string> listCategory = new List<string>();
+            foreach (var cat in db.Categories)
+            {
+                listCategory.Add(cat.Name);
+            }
+            return listCategory;
         }
 
         private NewsViewModel CreateModelWithId(int id)
@@ -95,7 +123,10 @@ namespace DailyBugle.Areas.Editor.Controllers
                 NewsId = news.NewsId,
                 Title = news.Title,
                 AuthorName = news.AuthorName,
-                Text = news.Text
+                Text = news.Text,
+                Thumbnail = news.Thumbnail,
+                Category = news.Category
+
             };
             return model;
         }

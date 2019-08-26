@@ -14,12 +14,20 @@ namespace DailyBugle
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+
+            routes.MapRoute(
+                name: "FrontEndPage",
+                url: "FrontEnd/{controller}/{action}/{id}",
+                defaults: new { controller = "HomePage", action = "Index"}
+                );
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new {controller = "Home", action = "Index", id = UrlParameter.Optional }
                 
             );
+
 
             routes.MapRoute(
                 name: "AdminHomePage",
@@ -49,7 +57,6 @@ namespace DailyBugle
                 name: "EditorNewsPage",
                 url: "Editor/News/Index/{id}",
                 defaults: new {area = "Editor", controller = "News", action = "Index", id = UrlParameter.Optional}
-                
                 );
         }
     }

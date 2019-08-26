@@ -26,5 +26,7 @@ namespace DailyBugle.Models
         }
     
         public virtual DbSet<News> News { get; set; }
+        public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
     }
 }

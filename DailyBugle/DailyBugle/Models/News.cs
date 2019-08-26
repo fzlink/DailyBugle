@@ -11,23 +11,23 @@ namespace DailyBugle.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class News
     {
-        
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public News()
+        {
+            this.Comments = new HashSet<Comment>();
+        }
+    
         public int NewsId { get; set; }
-
-        
         public string Title { get; set; }
-
-        
         public string Text { get; set; }
-
-        
         public byte[] Thumbnail { get; set; }
-
-        
         public string AuthorName { get; set; }
+        public string Category { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

@@ -53,6 +53,30 @@ namespace DailyBugle.Controllers
         }
 
         [Authorize(Roles = "User, Editor, SuperAdmin")]
+        public ActionResult Details(int id)
+        {
+            NewsViewModel model = CreateModelWithId(id);
+            return View(model);
+        }
+
+        private NewsViewModel CreateModelWithId(int id)
+        {
+            DailyBugleDBEntities db = new DailyBugleDBEntities();
+
+            var news = db.News.Where(x => x.NewsId == id).FirstOrDefault();
+
+            NewsViewModel model = new NewsViewModel()
+            {
+                NewsId = news.NewsId,
+                Title = news.Title,
+                AuthorName = news.AuthorName,
+                Text = news.Text,
+                Thumbnail = news.Thumbnail
+            };
+            return model;
+        }
+
+        [Authorize(Roles = "User, Editor, SuperAdmin")]
         public ActionResult EditProfile()
         {
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));

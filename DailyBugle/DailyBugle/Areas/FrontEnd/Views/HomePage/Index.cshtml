@@ -1,0 +1,123 @@
+﻿@model IEnumerable<DailyBugle.Models.NewsViewModel>
+
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Areas/FrontEnd/Views/Shared/_LayoutFrontEnd.cshtml";
+}
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/FrontEndHome.css" rel="stylesheet" />
+@{
+    if (Model.Count() == 0)
+    {
+
+        using (Html.BeginForm("SearchNews", "HomePage"))
+        {
+            <span style="float:right;padding:20px">
+                @Html.TextBox("searchText", "", new { placeholder = "Search" })
+                <button type="submit" class="glyphicon glyphicon-search" style="height:30px;width:50px"></button>
+            </span>
+        }
+        <h1>No News Was Found.</h1>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-md-12 text-center">
+                @using (Html.BeginForm("SearchNews", "HomePage"))
+                {
+                    <span style="float:right;padding:20px">
+                        @Html.TextBox("searchText", "", new { placeholder = "Search" })
+                        <button type="submit" class="glyphicon glyphicon-search" style="height:30px;width:50px"></button>
+                    </span>
+                }
+                <div style="margin-top:100px"></div>
+
+
+                <h1>LATEST NEWS!!!!!</h1>
+
+                @{
+                    var first = Model.Max(m => m.NewsId);
+                    var news = Model.Where(m => m.NewsId == first).FirstOrDefault();
+                    Console.WriteLine(first);
+                }
+                @{
+                    var base64 = Convert.ToBase64String(news.Thumbnail);
+                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                }
+
+                <div class="col-main">
+
+                    <div>
+                        <a class="inner" href="@Url.Action("NewsContent","HomePage", new { id=Model.ElementAt(Model.Count()-1).NewsId })">
+                            <img src="@imgSrc" style="height:500px;width:800px" />
+                            <br />
+                            <h3>@news.Title</h3>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <h1 class="text-center">MORE NEWS!!!!</h1>
+
+        int k = 0;
+        while (k < Model.Count())
+        {
+            <div class="row">
+                @while (true)
+                {
+                    <div class="col-md-4 text-center">
+                        @{
+                            var base64Col = Convert.ToBase64String(Model.ElementAt(k).Thumbnail);
+                            var imgSrcCol = String.Format("data:image/gif;base64,{0}", base64Col);
+                        }
+
+
+
+                        <div>
+                            <a class="inner" href="@Url.Action("NewsContent","HomePage", new { id = Model.ElementAt(k).NewsId})">
+                                <img src="@imgSrcCol" style="height:150px;width:200px" />
+                                <br />
+                                <h4>@Model.ElementAt(k).Title</h4>
+                            </a>
+                        </div>
+                    </div>
+
+                    k++;
+                    if ((k % 3 == 0) || (k >= Model.Count()))
+                    {
+                        break;
+                    }
+                }
+            </div>
+        }
+
+            <div class="text-center">
+                @{
+                    if (ViewBag.PageCount > 0)
+                    {
+                        for (int i = 0; i < ViewBag.PageCount + 1; i++)
+                        {
+
+                            if ((i == ViewBag.PageCount) && ViewBag.PageMod)
+                            {
+                                break;
+                            }
+                            if (!ViewBag.Cat)
+                            {
+                                <a style="font-size:xx-large;padding:10px" href="@Url.Action("Index","HomePage",new { page = i})">@(i + 1)</a>
+                            }
+                            else
+                            {
+                                <a style="font-size:xx-large;padding:10px" href="@Url.Action("CatIndex",new {CategoryName = Model.First().Category, page = i})">@(i + 1)</a>
+                            }
+
+                        }
+                    }
+
+                }
+            </div>
+
+    }
+}

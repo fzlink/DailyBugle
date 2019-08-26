@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.11.12.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.11.12\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -178,6 +181,8 @@
     <Compile Include="Areas\Editor\Controllers\EditorPageController.cs" />
     <Compile Include="Areas\Editor\Controllers\NewsController.cs" />
     <Compile Include="Areas\Editor\EditorAreaRegistration.cs" />
+    <Compile Include="Areas\FrontEnd\Controllers\HomePageController.cs" />
+    <Compile Include="Areas\FrontEnd\FrontEndAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -186,6 +191,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Category.cs">
+      <DependentUpon>NewsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Comment.cs">
+      <DependentUpon>NewsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EditProfileViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -216,6 +227,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\FrontEndHome.css" />
+    <Content Include="Content\FrontEndLayout.css" />
     <Content Include="Content\Images\News1.jpg" />
     <Content Include="Content\Images\News2.jpg" />
     <Content Include="Content\Images\News3.jpg" />
@@ -272,6 +285,12 @@
     <Content Include="Areas\Editor\Views\News\Details.cshtml" />
     <Content Include="Areas\Editor\Views\News\Edit.cshtml" />
     <Content Include="Areas\Editor\Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Areas\FrontEnd\Views\web.config" />
+    <Content Include="Areas\FrontEnd\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\FrontEnd\Views\Shared\_LayoutFrontEnd.cshtml" />
+    <Content Include="Areas\FrontEnd\Views\HomePage\Index.cshtml" />
+    <Content Include="Areas\FrontEnd\Views\HomePage\NewsContent.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminPage\CreateCategory.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -283,14 +302,18 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -320,12 +343,14 @@
     <Content Include="Views\User\News.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\EditProfile.cshtml" />
+    <Content Include="Views\User\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Views\Home\" />
     <Folder Include="Areas\Admin\Views\ManageAdmin\" />
     <Folder Include="Areas\Editor\Models\" />
+    <Folder Include="Areas\FrontEnd\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -336,7 +361,9 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>

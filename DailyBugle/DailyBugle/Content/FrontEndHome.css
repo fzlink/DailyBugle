@@ -1,0 +1,14 @@
+﻿body {
+}
+
+.col-main {
+    background-size: 100%;
+    height:100%;
+    align-self:center;
+}
+
+.inner {
+    font-size:20px;
+    margin:30px;
+}
+

@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link href="~/Content/FrontEndLayout.css" rel="stylesheet" />
+    <div class="navtop">
+        @*<h2 class="txtLogo">Daily Bugle</h2>*@
+        <a href="@Url.Action("Index","HomePage")">
+            <img src="~/Content/Logos/dailyBugleLogoSmall.jpg" class="imgLogo" />
+        </a>
+        <a href="@Url.Action("CatIndex", new { CategoryName = "Business"})">BUSINESS</a>
+        <a href="@Url.Action("CatIndex", new { CategoryName = "Sports"})">SPORTS</a>
+        <a href="@Url.Action("CatIndex", new { CategoryName = "Spider-Man"})">SPIDER-MAN</a>
+        <a href="@Url.Action("CatIndex", new { CategoryName = "Magazine"})">MAGAZINE</a>
+
+    </div>
+
+</head>
+<body>
+
+    <div>
+        @RenderBody()
+    </div>
+    <footer class="footer">
+        @*@RenderSection("footer", true)*@
+        @*<p class="lead">
+            This is footer section.
+        </p>*@
+        <div class="col-md-6">
+            <h2>ABOUT US</h2>
+            <p>Hello This is Hellscream presenting you to the best newspaper ever created. Our Editor Peter Parker is so talented that the paper may depend solely on him.</p>
+            <p>Our Biggest editor is of course J.Jonah Jameson. His father founded this company and his son is very good at keeping it top at the charts.</p>
+        </div>
+        <div class="col-md-6">
+            <h2>CONTACT US</h2>
+            <ul>
+                <li class="glyphicon glyphicon-map-marker">  New York</li>
+                <br />
+                <li class="glyphicon glyphicon-phone">  123-456-789</li>
+                <br />
+                <li class="glyphicon glyphicon-envelope">  hr@dailybugle.com</li>
+            </ul>
+        </div>
+    </footer>
+</body>
+</html>

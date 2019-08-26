@@ -1,0 +1,120 @@
+﻿@model DailyBugle.Models.NewsViewModel
+@{
+    ViewBag.Title = "NewsContent";
+    Layout = "~/Areas/FrontEnd/Views/Shared/_LayoutFrontEnd.cshtml";
+}
+@using System.Web.UI.HtmlControls;
+@using DailyBugle.Models
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<div class="newscontent">
+    <div class="container">
+        @using (Html.BeginForm("SearchNews", "HomePage"))
+        {
+        <span @*style="float:right;padding:20px"*@ style="margin-left:1200px">
+            @Html.TextBox("searchText", "", new { placeholder = "Search" })
+            <button type="submit" class="glyphicon glyphicon-search" style="height:30px;width:50px"></button>
+        </span>
+        }
+        <div class="row text-center">
+            <div class="col-md-12">
+                <div class="thumbnail" style="background-color:lightgray">
+                    @{
+                        var base64 = Convert.ToBase64String(Model.Thumbnail);
+                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                    }
+                    <img src="@imgSrc" />
+                    <div class="caption">
+                        <h3>@Model.Title</h3>
+                        <h4>
+                            <span class="glyphicon glyphicon-user">@Model.AuthorName</span>
+                        </h4>
+                    </div>
+                    <p class="text-left" style="padding:50px">
+                        @Model.Text
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="container" id="commentSection" @*style="background-color:lightblue"*@>
+                <h2>Comment Section</h2>
+                @{
+                    foreach (var comment in (ViewBag.Comments as List<Comment>))
+                    {
+                        <div @*style="border:solid"*@>
+                            <h4 style="text-align:left">@comment.PersonName</h4>
+                            <p style="text-align:left">@comment.Text</p>
+                            <hr style="background-color:darkred;height:3px;color:red;border:none" />
+                        </div>
+                    }
+                }
+            </div>
+
+        </div>
+
+        <form id="commentform" style="margin-left:50px;border:solid">
+            <textarea placeholder="Comment Text" rows="4" cols="1000" form="commentform" id="txtcomment" name="txtcomment" required></textarea>
+            <br />
+            <input placeholder="Your Name" id="txtperson" name="txtperson" required/>
+            <input type="button" id="button" name="button" value="Post Comment" />
+            
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $("#button").click(function () {
+        $.ajax({
+            @*url: '@Url.Action("SaveComment","HomePage", new { area="FrontEnd"})',*@
+            url: "/FrontEnd/HomePage/SaveComment",
+            type: "POST",
+            data: { comment: $("textarea#txtcomment").val(), id: @Model.NewsId, personName: $("input#txtperson").val() },
+            dataType: "json",
+            success: function (tmp) {
+                if (tmp == "Hata") {
+                    console.log(document.getElementById("txtwarning"));
+                    if (!document.getElementById("txtwarning")) {
+                        var warningText = document.createElement("label");
+                        warningText.id = "txtwarning";
+                        warningText.innerHTML = "Please fill the empty spaces."
+                        warningText.style.color = 'red';
+                        document.getElementById("commentSection").appendChild(warningText);
+                    }
+                    
+                }
+                else {
+                    if (document.getElementById("txtwarning"))
+                        document.getElementById("txtwarning").remove();
+                    console.log(tmp);
+                    //alert("hello");
+                    var commentdiv = document.createElement("div");
+                    var personText = document.createElement("h4");
+                    var commentText = document.createElement("p");
+                    var hr = document.createElement("hr");
+                    personText.style.textAlign = commentText.style.textAlign = 'left';
+                    hr.style.backgroundColor = 'darkred';
+                    hr.style.height = '3px';
+                    hr.style.border = 'none';
+
+                    personText.innerHTML = tmp.PersonName;
+                    commentText.innerHTML = tmp.Text;
+
+                    commentdiv.appendChild(personText);
+                    commentdiv.appendChild(commentText);
+                    commentdiv.appendChild(hr);
+                    document.getElementById("commentSection").appendChild(commentdiv);
+                    console.log(document.getElementById("txtperson").value);
+                    document.getElementById("txtperson").value = "";
+                    document.getElementById("txtcomment").value = "";
+                }
+                
+            },
+            error: function (error) {
+                console.log(error);
+                alert("error");
+            }
+        });
+    });
+
+</script>

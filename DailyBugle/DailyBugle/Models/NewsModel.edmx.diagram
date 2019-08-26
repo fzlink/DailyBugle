@@ -6,6 +6,9 @@
     <edmx:Diagrams>
       <Diagram DiagramId="f221fc281d3e4f698bfcb90c25c35053" Name="Diagram1">
         <EntityTypeShape EntityType="DailyBugleDBModel.News" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DailyBugleDBModel.Comment" Width="1.5" PointX="3" PointY="0.875" />
+        <AssociationConnector Association="DailyBugleDBModel.FK_Comment_News" />
+        <EntityTypeShape EntityType="DailyBugleDBModel.Category" Width="1.5" PointX="3.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

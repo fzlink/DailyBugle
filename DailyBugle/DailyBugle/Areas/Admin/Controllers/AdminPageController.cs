@@ -44,7 +44,33 @@ namespace DailyBugle.Areas.Admin.Controllers
             return View("Index");
         }
 
+        public ActionResult CreateCategory()
+        {
+            ViewBag.AlreadyExists = false;
+            return View();
+        }
 
+        [HttpPost]
+        public ActionResult CreateCategory(FormCollection form)
+        {
+            DailyBugleDBEntities db = new DailyBugleDBEntities();
+            string categoryName = form["txtCategoryName"];
+            ViewBag.AlreadyExists = false;
+            foreach (var cat in db.Categories)
+            {
+                if (cat.Name.Equals(categoryName))
+                {
+                    ViewBag.AlreadyExists = true;
+                    return View();
+                }
+            }
+            Category category = new Category();
+            category.Name = categoryName;
+            db.Categories.Add(category);
+            db.SaveChanges();
+
+            return View();
+        }
 
         public ActionResult AssignRole()
         {
