@@ -11,7 +11,7 @@
         @using (Html.BeginForm("SearchNews", "HomePage"))
         {
         <span @*style="float:right;padding:20px"*@ style="margin-left:1200px">
-            @Html.TextBox("searchText", "", new { placeholder = "Search" })
+            @Html.TextBox("searchText", "", new { placeholder = "Search", required = "required" })
             <button type="submit" class="glyphicon glyphicon-search" style="height:30px;width:50px"></button>
         </span>
         }

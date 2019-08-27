@@ -38,5 +38,10 @@ namespace DailyBugle.Controllers
 
             return View();
         }
+
+        public ActionResult RetrieveApi()
+        {
+            return View();
+        }
     }
 }
